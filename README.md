@@ -25,3 +25,8 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 - Clone it on your computer.
 - The `yarn install` command will allow you to install the dependencies.
 - The `yarn start` command will allow you to run the Front-End.
+
+### 2.3 API endpoints (Transations)
+
+- [Swagger file](https://github.com/Lob2018/Lobjois_Yann_13_code_phase_1_052022/blob/main/swagger.yaml)
+- [Swagger Editor](https://editor.swagger.io/)
