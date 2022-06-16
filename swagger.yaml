@@ -191,7 +191,7 @@ paths:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: 'Update a transaction'
+      summary: 'Update a transaction by ID'
       description: ''
       operationId: 'updateTransaction'
       produces:
