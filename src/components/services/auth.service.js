@@ -39,8 +39,10 @@ const logout = () => {
   if (sessionStorage.getItem('argentbank-user'))
     sessionStorage.removeItem('argentbank-user')
 }
-export default {
+
+const authService = {
   signup,
   login,
   logout,
 }
+export default authService

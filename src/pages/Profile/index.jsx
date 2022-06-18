@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form'
 import joi from 'joi'
 
 import Account from '../../components/Account'
-import AuthHeader from '../../components/services/auth-header'
-import UserService from '../../components/services/user.service'
+import authHeader from '../../components/services/auth-header'
+import userService from '../../components/services/user.service'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { selectUser } from '../../store/selectors'
@@ -98,7 +98,8 @@ function Profile() {
       })
       dispatch(loadingActions.set(true))
       // API login
-      UserService.updateUser(firstname, lastname)
+      userService
+        .updateUser(firstname, lastname)
         .then(() => {
           dispatch(
             userActions.set({
@@ -126,7 +127,7 @@ function Profile() {
 
   return (
     <main className="main bg-dark">
-      {AuthHeader() ? (
+      {authHeader() ? (
         <>
           <div className="header">
             {isVisible ? (

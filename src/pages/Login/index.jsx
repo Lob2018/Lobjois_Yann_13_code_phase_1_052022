@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import joi from 'joi'
 
-import AuthService from '../../components/services/auth.service'
+import authService from '../../components/services/auth.service'
 
 import { useDispatch } from 'react-redux'
 import * as loadingActions from '../../features/loading'
@@ -95,7 +95,8 @@ function Login() {
       })
       dispatch(loadingActions.set(true))
       // API login
-      AuthService.login(email, password, isLocalStoraged)
+      authService
+        .login(email, password, isLocalStoraged)
         .then(() => {
           dispatch(loadingActions.set(false))
           navigate(`/profile`)

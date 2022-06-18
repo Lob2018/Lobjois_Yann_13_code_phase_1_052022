@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { StyledLink, Loader } from '../../utils/style/Atoms'
 import Logo from '../../assets/argentBankLogo.png'
 
-import AuthService from '../services/auth.service'
-import UserService from '../services/user.service'
+import authHeader from '../services/auth-header'
+import authService from '../services/auth.service'
+import userService from '../services/user.service'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectLoading } from '../../store/selectors'
@@ -47,16 +48,14 @@ function Header() {
 
   const disconnect = () => {
     dispatch(userActions.set({}))
-    AuthService.logout()
+    authService.logout()
   }
 
   if (!user.data.email) {
-    if (
-      localStorage.getItem('argentbank-user') ||
-      sessionStorage.getItem('argentbank-user')
-    ) {
+    if (authHeader()) {
       // get the user's data with the token
-      UserService.userAccess()
+      userService
+        .userAccess()
         .then((userResult) => {
           dispatch(loadingActions.set(false))
           dispatch(userActions.set(userResult.data.body))

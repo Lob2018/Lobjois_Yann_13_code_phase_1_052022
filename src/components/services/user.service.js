@@ -13,7 +13,9 @@ const updateUser = (firstName, lastName) => {
     lastName,
   })
 }
-export default {
+
+const userService = {
   userAccess,
   updateUser,
 }
+export default userService
