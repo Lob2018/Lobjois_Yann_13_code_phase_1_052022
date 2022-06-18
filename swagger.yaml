@@ -9,6 +9,173 @@ basePath: /api/v1
 schemes:
   - http
 paths:
+  /transactions/currentMonth:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Find all the transactions for the current month
+      description: Returns transactions of the current month
+      parameters: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionsCurrentMonthResponse'
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Find a transaction by ID
+      description: Find transation by ID
+      parameters:
+        - name: 'transactionId'
+          in: 'path'
+          description: 'ID of the transaction that needs to be fetched'
+          required: true
+          type: 'string'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}/informations:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Create a transaction's information
+      description: ''
+      parameters:
+        - name: 'transactionId'
+          in: 'path'
+          description: 'ID of the transaction in which the information will be added'
+          required: true
+          type: 'string'
+        - in: 'body'
+          name: 'body'
+          description: 'information to create'
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionInformation'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Information not found
+        '405':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}/informations/{informationId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Get a transaction's information
+      description: ''
+      parameters:
+        - name: 'transactionId'
+          in: 'path'
+          description: 'ID of the transaction in which the information is'
+          required: true
+          type: 'string'
+        - name: 'informationId'
+          in: 'path'
+          description: 'ID of the information to be retrieved'
+          required: true
+          type: 'string'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransactionInformationResponse'
+        '404':
+          description: Information not found
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Update a transaction's information
+      description: ''
+      parameters:
+        - name: 'transactionId'
+          in: 'path'
+          description: 'ID of the transaction in which the information is'
+          required: true
+          type: 'string'
+        - name: 'informationId'
+          in: 'path'
+          description: 'ID of the information to be updated'
+          required: true
+          type: 'string'
+        - in: 'body'
+          name: 'body'
+          description: 'information to create'
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionInformation'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction's information retrieved successfully
+        '404':
+          description: Information not found
+        '405':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Delete a transaction's information
+      description: ''
+      parameters:
+        - name: 'transactionId'
+          in: 'path'
+          description: 'ID of the transaction in which the information is'
+          required: true
+          type: 'string'
+        - name: 'informationId'
+          in: 'path'
+          description: 'ID of the information to be deleted'
+          required: true
+          type: 'string'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Information not found
+        '500':
+          description: Internal Server Error
   /user/login:
     post:
       tags:
@@ -112,140 +279,6 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /transaction/currentMonth:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: 'Find all the transactions for the current month'
-      description: 'Returns transactions of the current month'
-      operationId: 'getTransactionsOfTheMonth'
-      produces:
-        - 'application/json'
-      parameters: []
-      responses:
-        '200':
-          description: 'Successful operation'
-          schema:
-            $ref: '#/definitions/TransactionArrayResponse'
-        '500':
-          description: 'Internal Server Error'
-  /transaction:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: 'Create a transaction'
-      description: ''
-      operationId: 'addTransaction'
-      produces:
-        - 'application/json'
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: 'transaction to create'
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionUnknown'
-      responses:
-        '200':
-          description: 'Transaction created successully'
-          schema:
-            $ref: '#/definitions/TransactionKnown'
-        '400':
-          description: 'Invalid Fields'
-        '500':
-          description: 'Internal Server Error'
-  /transaction/{transactionId}:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: 'Find transation by ID'
-      description: 'Returns a single transaction'
-      operationId: 'getTransactionById'
-      produces:
-        - 'application/json'
-      parameters:
-        - name: 'transactionId'
-          in: 'path'
-          description: 'ID of the transaction that needs to be fetched'
-          required: true
-          type: 'string'
-      responses:
-        '200':
-          description: 'Transaction retrieved successully'
-          schema:
-            $ref: '#/definitions/TransactionKnown'
-        '400':
-          description: 'Invalid ID supplied'
-        '404':
-          description: 'Order not found'
-        '500':
-          description: 'Internal Server Error'
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: 'Update a transaction by ID'
-      description: ''
-      operationId: 'updateTransaction'
-      produces:
-        - 'application/json'
-      parameters:
-        - name: 'transactionId'
-          in: 'path'
-          description: 'ID of the transaction that needs to be updated'
-          required: true
-          type: 'string'
-        - in: 'body'
-          name: 'body'
-          description: 'The updated transaction'
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionKnown'
-      responses:
-        '200':
-          description: 'Transaction updated successully'
-          schema:
-            $ref: '#/definitions/TransactionKnown'
-        '400':
-          description: 'Invalid ID supplied'
-        '404':
-          description: 'Transaction not found'
-        '500':
-          description: 'Internal Server Error'
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: 'Delete transaction by ID'
-      description: ''
-      operationId: 'deleteTransation'
-      produces:
-        - 'application/json'
-      parameters:
-        - name: 'transactionId'
-          in: 'path'
-          description: 'ID of the transaction that needs to be deleted'
-          required: true
-          type: 'string'
-      responses:
-        '200':
-          description: 'Transaction deleted successully'
-          schema:
-            $ref: '#/definitions/TransactionIdResponse'
-        '400':
-          description: 'Invalid ID supplied'
-        '404':
-          description: 'Transaction not found'
-        '500':
-          description: 'Internal Server Error'
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -274,71 +307,20 @@ definitions:
       password:
         type: string
         description: user password
-  TransactionUnknown:
-    properties:
-      date:
-        type: string
-        description: the date of the transaction
-      accountType:
-        type: string
-        description: the type of account to be used (ex:Credit Card)
-      description:
-        type: string
-        description: the transaction's description (ex:Golden Sun Bakery)
-      amount:
-        type: string
-        description: the amount of the transaction in dollars
-      transactionType:
-        type: string
-        description: the type of transaction (ex:Electronic)
-      category:
-        type: string
-        description: the transaction's category (ex:Food)
-      note:
-        type: string
-        description: note added to the transaction
-  TransactionKnown:
-    properties:
-      id:
-        type: string
-        description: the transaction's id
-      date:
-        type: string
-        description: the date of the transaction
-      accountType:
-        type: string
-        description: the type of account to be used (ex:Credit Card)
-      description:
-        type: string
-        description: the transaction's description (ex:Golden Sun Bakery)
-      amount:
-        type: string
-        description: the amount of the transaction in dollars
-      transactionType:
-        type: string
-        description: the type of transaction (ex:Electronic)
-      category:
-        type: string
-        description: the transaction's category (ex:Food)
-      note:
-        type: string
-        description: note added to the transaction
-  TransactionArrayResponse:
-    type: 'array'
-    items:
-      $ref: '#/definitions/TransactionKnown'
-  TransactionIdResponse:
+  UserProfile:
     type: object
     properties:
-      status:
-        type: integer
-      message:
+      firstName:
         type: string
-      body:
-        type: object
-        properties:
-          id:
-            type: string
+      lastName:
+        type: string
+  TransactionInformation:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
   ApiResponse:
     type: object
     properties:
@@ -358,10 +340,72 @@ definitions:
     properties:
       token:
         type: string
-  UserProfile:
+  TransactionsCurrentMonthResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        account:
+          type: string
+          description: the corresponding type of account concerned (credit category, etc.)
+        amount:
+          type: string
+        transactionType:
+          type: string
+          description: the type of transaction (electronic, etc.)
+        category:
+          type: string
+          description: the category of transaction (food, etc.)
+        informations:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              value:
+                type: string
+  TransactionResponse:
     type: object
     properties:
-      firstName:
+      id:
         type: string
-      lastName:
+      date:
+        type: string
+      account:
+        type: string
+        description: the corresponding type of account concerned (credit category, etc.)
+      amount:
+        type: string
+      transactionType:
+        type: string
+        description: the type of transaction (electronic, etc.)
+      category:
+        type: string
+        description: the category of transaction (food, etc.)
+      informations:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            value:
+              type: string
+  TransactionInformationResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      value:
         type: string
