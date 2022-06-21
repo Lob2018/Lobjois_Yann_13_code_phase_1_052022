@@ -17,7 +17,12 @@ paths:
         - Transactions Module
       summary: Find all the transactions for the current month
       description: Returns transactions of the current month
-      parameters: []
+      parameters:
+        - in: header
+          type: 'string'
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
       produces:
         - application/json
       responses:
