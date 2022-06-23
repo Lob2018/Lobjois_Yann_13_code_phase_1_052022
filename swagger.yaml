@@ -27,7 +27,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Current month transactions retrieved successully
           schema:
             $ref: '#/definitions/TransactionsCurrentMonthResponse'
         '401': 
@@ -57,7 +57,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: Successful operation
+          description: Transaction retrieved successfully
           schema:
             $ref: '#/definitions/TransactionResponse'
         '401': 
@@ -95,7 +95,7 @@ paths:
         - application/json
       responses:
         '201':
-          description: Successful operation
+          $ref: '#/responses/200'
         '401': 
           $ref: '#/responses/401'
         '404':
@@ -174,7 +174,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: Transaction's information retrieved successfully
+          $ref: '#/responses/200'
         '401': 
           $ref: '#/responses/401'
         '404':
@@ -211,7 +211,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: Successful operation
+          $ref: '#/responses/200'
         '401': 
           $ref: '#/responses/401'
         '404':
@@ -224,6 +224,10 @@ securityDefinitions:
     name: Authorization
     in: header
 responses:
+  200:
+    description: Successful operation
+    schema:
+      $ref: '#/definitions/Ok'
   401:
     description: Unauthorized
     schema:
@@ -241,6 +245,16 @@ responses:
     schema:
       $ref: '#/definitions/Error'
 definitions:
+  Ok:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    required:
+      - code
+      - message
   Error:
     type: object
     properties:
