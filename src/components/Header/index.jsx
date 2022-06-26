@@ -52,10 +52,11 @@ function Header() {
   }
 
   if (!user.data.email) {
-    if (authHeader()) {
+    const token = authHeader()
+    if (token) {
       // get the user's data with the token
       userService
-        .userAccess()
+        .userAccess(token)
         .then((userResult) => {
           dispatch(loadingActions.set(false))
           dispatch(userActions.set(userResult.data.body))

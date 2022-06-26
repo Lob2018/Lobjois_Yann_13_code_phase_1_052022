@@ -99,7 +99,7 @@ function Profile() {
       dispatch(loadingActions.set(true))
       // API login
       userService
-        .updateUser(firstname, lastname)
+        .updateUser(firstname, lastname, authHeader())
         .then(() => {
           dispatch(
             userActions.set({
